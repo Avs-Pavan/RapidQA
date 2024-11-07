@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "RapidQA"
 include(":app")
+include(":rapidqa")
