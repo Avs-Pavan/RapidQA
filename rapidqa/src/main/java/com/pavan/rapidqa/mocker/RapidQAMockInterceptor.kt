@@ -11,33 +11,38 @@ import okhttp3.Response
 import okhttp3.ResponseBody
 import retrofit2.Invocation
 
-class RetrofitMockInterceptor(
+class RapidQAMockInterceptor(
     assetManager: AssetManager,
     private val isGlobalMockingEnabled: () -> Boolean = { true },
 ) : Interceptor {
 
-    private val jsonManager = JsonManager(assetManager)
+    private val rapidQAAssetManager = RapidQAAssetManager(assetManager)
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val initialRequest = chain.request()
-        val isMockingEnabled = isGlobalMockingEnabled()
+        try {
+            val initialRequest = chain.request()
+            val isMockingEnabled = isGlobalMockingEnabled()
 
-        if (isMockingEnabled.not()) {
+            if (isMockingEnabled.not()) {
+                return chain.proceed(initialRequest)
+            }
+
+            val method = initialRequest.tag(Invocation::class.java)?.method()
+            val annotation = method?.getAnnotation(Mocked::class.java)
+            if (annotation != null) {
+                return getMockResponse(initialRequest, annotation.fileName, annotation.responseCode)
+            }
             return chain.proceed(initialRequest)
+        }catch (e: Exception){
+            Log.e(MOCK_INTERCEPTOR_TAG, "Error in mock interceptor: ${e.message}")
+            throw e
         }
-
-        val method = initialRequest.tag(Invocation::class.java)?.method()
-        val annotation = method?.getAnnotation(Mocked::class.java)
-        if (annotation != null) {
-            return getMockResponse(initialRequest, annotation.fileName, annotation.responseCode)
-        }
-        return chain.proceed(initialRequest)
     }
 
     private fun getMockResponse(request: Request, fileName: String, responseCode: Int): Response {
         Log.d(MOCK_INTERCEPTOR_TAG, "Trying to mock request: ${request.url()} with file: $fileName")
         val jsonString = kotlin.run {
-            jsonManager.getJsonFromFile(fileName)
+            rapidQAAssetManager.getJsonFromFile(fileName)
         }
         val mockBody = ResponseBody.create(MediaType.parse("application/json"), jsonString)
 

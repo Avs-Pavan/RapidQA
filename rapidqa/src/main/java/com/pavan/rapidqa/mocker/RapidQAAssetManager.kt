@@ -5,7 +5,7 @@ import android.util.Log
 import com.pavan.rapidqa.RapidQAConstants.MOCK_INTERCEPTOR_TAG
 import java.io.FileNotFoundException
 
-class JsonManager(
+class RapidQAAssetManager(
     private val assetManager: AssetManager
 ) {
     fun getJsonFromFile(fileName: String): String {
