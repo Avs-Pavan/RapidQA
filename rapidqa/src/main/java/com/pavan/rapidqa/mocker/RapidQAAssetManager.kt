@@ -2,7 +2,7 @@ package com.pavan.rapidqa.mocker
 
 import android.content.res.AssetManager
 import android.util.Log
-import com.pavan.rapidqa.RapidQAConstants.MOCK_INTERCEPTOR_TAG
+import com.pavan.rapidqa.mocker.RapidQAMockInterceptor.Companion.MOCK_INTERCEPTOR_TAG
 import java.io.FileNotFoundException
 
 class RapidQAAssetManager(
@@ -16,8 +16,12 @@ class RapidQAAssetManager(
             open(jsonFileName)
                 .bufferedReader()
                 .use { it.readText() }
-        }.getOrElse {
-            Log.d(MOCK_INTERCEPTOR_TAG, "Error reading JSON file $jsonFileName. Check if it exists")
+        }.getOrElse { error ->
+            Log.e(
+                MOCK_INTERCEPTOR_TAG,
+                "Error reading JSON file $jsonFileName. Check if it exists",
+                error
+            )
             throw FileNotFoundException("Error reading JSON file $jsonFileName. Check if it exists")
         }
     }

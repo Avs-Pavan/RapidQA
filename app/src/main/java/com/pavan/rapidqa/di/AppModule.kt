@@ -2,6 +2,7 @@ package com.pavan.rapidqa.di
 
 import android.content.Context
 import com.pavan.rapidqa.data.TestAPI
+import com.pavan.rapidqa.interceptors.delay.RapidQADelayInterceptor
 import com.pavan.rapidqa.mocker.RapidQAMockInterceptor
 import com.pavan.rapidqa.store.RapidQADataStore
 import com.pavan.rapidqa.store.RapidQAInMemoryDataStore
@@ -54,13 +55,21 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideDelayedInterceptor(): RapidQADelayInterceptor {
+        return RapidQADelayInterceptor(isDelayEnabled = { true })
+    }
+
+    @Singleton
+    @Provides
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
         rapidQAMockInterceptor: RapidQAMockInterceptor,
-        rapidQaTracer: RapidQaTracer
+        rapidQaTracer: RapidQaTracer,
+        rapidQADelayInterceptor: RapidQADelayInterceptor
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(rapidQADelayInterceptor)
             .addInterceptor(rapidQaTracer)
             .addInterceptor(rapidQAMockInterceptor)
         return builder.build()

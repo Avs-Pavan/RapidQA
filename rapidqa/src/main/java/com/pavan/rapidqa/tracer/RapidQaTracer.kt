@@ -1,7 +1,6 @@
 package com.pavan.rapidqa.tracer
 
 import android.util.Log
-import com.pavan.rapidqa.RapidQAConstants.RAPID_QA_TRACER_TAG
 import com.pavan.rapidqa.store.RapidQADataStore
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -18,8 +17,12 @@ class RapidQaTracer(
             dataStore.put(chain.request().url().url().toString(), Pair(initialRequest, response))
             return response
         } catch (e: Exception) {
-            Log.e(RAPID_QA_TRACER_TAG, "Exception in intercept: ${e.message}", e)
+            Log.e(RAPID_QA_TRACER_TAG, "Exception in intercept:", e)
             throw e
         }
     }
+    companion object{
+        const val RAPID_QA_TRACER_TAG = "RapidQA-RapidQaTracer"
+    }
+
 }

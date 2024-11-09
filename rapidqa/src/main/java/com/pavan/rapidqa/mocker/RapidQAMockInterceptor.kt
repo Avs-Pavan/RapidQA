@@ -2,7 +2,6 @@ package com.pavan.rapidqa.mocker
 
 import android.content.res.AssetManager
 import android.util.Log
-import com.pavan.rapidqa.RapidQAConstants.MOCK_INTERCEPTOR_TAG
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.Protocol
@@ -14,6 +13,7 @@ import retrofit2.Invocation
 class RapidQAMockInterceptor(
     assetManager: AssetManager,
     private val isGlobalMockingEnabled: () -> Boolean = { true },
+    private val includeHeaders: Boolean = false
 ) : Interceptor {
 
     private val rapidQAAssetManager = RapidQAAssetManager(assetManager)
@@ -30,29 +30,54 @@ class RapidQAMockInterceptor(
             val method = initialRequest.tag(Invocation::class.java)?.method()
             val annotation = method?.getAnnotation(Mocked::class.java)
             if (annotation != null) {
-                return getMockResponse(initialRequest, annotation.fileName, annotation.responseCode)
+                return getMockResponse(
+                    initialRequest,
+                    annotation.fileName,
+                    annotation.responseCode,
+                    includeHeaders
+                )
             }
+
             return chain.proceed(initialRequest)
-        }catch (e: Exception){
-            Log.e(MOCK_INTERCEPTOR_TAG, "Error in mock interceptor: ${e.message}")
+        } catch (e: Exception) {
+            Log.e(MOCK_INTERCEPTOR_TAG, "Error in mock interceptor:", e)
             throw e
         }
     }
 
-    private fun getMockResponse(request: Request, fileName: String, responseCode: Int): Response {
+    private fun getMockResponse(
+        request: Request,
+        fileName: String,
+        responseCode: Int,
+        includeHeaders: Boolean
+    ): Response {
         Log.d(MOCK_INTERCEPTOR_TAG, "Trying to mock request: ${request.url()} with file: $fileName")
         val jsonString = kotlin.run {
             rapidQAAssetManager.getJsonFromFile(fileName)
         }
         val mockBody = ResponseBody.create(MediaType.parse("application/json"), jsonString)
 
+        val newRequest = if (includeHeaders) {
+            request.newBuilder()
+                .addHeader(MOCK_INTERCEPTOR_HEADER, "true")
+                .addHeader(MOCK_INTERCEPTOR_HEADER_FILE_NAME, fileName)
+                .build()
+
+        } else request
+
         return Response.Builder()
             .protocol(Protocol.HTTP_1_1)
-            .request(request)
+            .request(newRequest)
             .code(responseCode)
             .message(mockBody.toString())
             .body(mockBody)
             .build()
+    }
+
+    companion object {
+        const val MOCK_INTERCEPTOR_TAG = "RapidQA-MockInterceptor"
+        const val MOCK_INTERCEPTOR_HEADER = "RapidQA-Mocked"
+        const val MOCK_INTERCEPTOR_HEADER_FILE_NAME = "RapidQA-Mocked-File-Name"
     }
 
 }
