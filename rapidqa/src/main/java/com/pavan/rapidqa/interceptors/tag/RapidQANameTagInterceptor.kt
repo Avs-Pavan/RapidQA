@@ -8,7 +8,6 @@
 package com.pavan.rapidqa.interceptors.tag
 
 import android.util.Log
-import com.pavan.rapidqa.tag.RapidQATag
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Invocation
@@ -26,7 +25,7 @@ class RapidQANameTagInterceptor() : Interceptor {
             }
 
             val newRequest = initialRequest.newBuilder()
-                .tag(RapidQATag::class.java, RapidQATagNamed(annotation.tag))
+                .tag(RapidQATagNamed::class.java, RapidQATagNamed(annotation.tag))
                 .build()
 
             return chain.proceed(newRequest)
