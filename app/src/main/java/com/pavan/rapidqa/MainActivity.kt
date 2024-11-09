@@ -4,19 +4,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pavan.rapidqa.presentation.TestViewModel
+import com.pavan.rapidqa.ui.RapidQATracerActivity
 import com.pavan.rapidqa.ui.theme.RapidQATheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,11 +32,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             RapidQATheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TestApi(
+                    Column(
                         modifier = Modifier
-                            .fillMaxSize()
                             .padding(innerPadding)
-                    )
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Button(
+                            onClick = {
+                                startActivity(
+                                    RapidQATracerActivity.getInstance(
+                                        context = this@MainActivity
+                                    )
+                                )
+                            }
+                        ) {
+                            Text("Open Rapid QA UI")
+                        }
+
+                        TestApi()
+                    }
                 }
             }
         }

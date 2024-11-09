@@ -7,7 +7,6 @@ import retrofit2.Invocation
 
 class RapidQADelayInterceptor(
     private val isDelayEnabled: () -> Boolean = { false },
-    private val includeHeaders: Boolean = false
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -28,15 +27,11 @@ class RapidQADelayInterceptor(
 
             Thread.sleep(annotation.timeMills)
 
-            if (includeHeaders) {
-                val newRequest = initialRequest.newBuilder()
-                    .addHeader(DELAY_INTERCEPTOR_HEADER, "true")
-                    .addHeader(DELAY_INTERCEPTOR_HEADER_DELAY_TIME, annotation.timeMills.toString())
-                    .build()
-                return chain.proceed(newRequest)
-            }
+            val newRequest = initialRequest.newBuilder()
+                .tag(RapidQATagDelay::class.java, RapidQATagDelay(annotation.timeMills))
+                .build()
 
-            return chain.proceed(initialRequest)
+            return chain.proceed(newRequest)
 
         } catch (e: Exception) {
             Log.e(DELAY_INTERCEPTOR_TAG, "Error in delay interceptor: ", e)
@@ -46,8 +41,6 @@ class RapidQADelayInterceptor(
 
     companion object {
         const val DELAY_INTERCEPTOR_TAG = "RapidQA-DelayInterceptor"
-        const val DELAY_INTERCEPTOR_HEADER = "RapidQA-Delay"
-        const val DELAY_INTERCEPTOR_HEADER_DELAY_TIME = "RapidQA-Delay-Time"
     }
 
 }

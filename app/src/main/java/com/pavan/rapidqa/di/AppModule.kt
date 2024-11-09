@@ -3,9 +3,11 @@ package com.pavan.rapidqa.di
 import android.content.Context
 import com.pavan.rapidqa.data.TestAPI
 import com.pavan.rapidqa.interceptors.delay.RapidQADelayInterceptor
+import com.pavan.rapidqa.interceptors.tag.RapidQANameTagInterceptor
 import com.pavan.rapidqa.mocker.RapidQAMockInterceptor
 import com.pavan.rapidqa.store.RapidQADataStore
 import com.pavan.rapidqa.store.RapidQAInMemoryDataStore
+import com.pavan.rapidqa.tracer.RapidQATraceRecord
 import com.pavan.rapidqa.tracer.RapidQaTracer
 import dagger.Module
 import dagger.Provides
@@ -13,8 +15,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -43,13 +43,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideQADataStore(): RapidQADataStore<String, Pair<Request, Response>> {
+    fun provideQADataStore(): RapidQADataStore<Long, RapidQATraceRecord> {
         return RapidQAInMemoryDataStore()
     }
 
     @Singleton
     @Provides
-    fun provideQATracer(dataStore: RapidQADataStore<String, Pair<Request, Response>>): RapidQaTracer {
+    fun provideQATracer(dataStore: RapidQADataStore<Long, RapidQATraceRecord>): RapidQaTracer {
         return RapidQaTracer(dataStore)
     }
 
@@ -61,14 +61,22 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideNameTagInterceptor(): RapidQANameTagInterceptor {
+        return RapidQANameTagInterceptor()
+    }
+
+    @Singleton
+    @Provides
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
         rapidQAMockInterceptor: RapidQAMockInterceptor,
         rapidQaTracer: RapidQaTracer,
-        rapidQADelayInterceptor: RapidQADelayInterceptor
+        rapidQADelayInterceptor: RapidQADelayInterceptor,
+        rapidQaNameTagInterceptor: RapidQANameTagInterceptor
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(rapidQaNameTagInterceptor)
             .addInterceptor(rapidQADelayInterceptor)
             .addInterceptor(rapidQaTracer)
             .addInterceptor(rapidQAMockInterceptor)
