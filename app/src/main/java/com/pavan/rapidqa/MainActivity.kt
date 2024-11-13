@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,18 +25,40 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pavan.rapidqa.presentation.TestViewModel
+import com.pavan.rapidqa.store.RapidQADataStore
+import com.pavan.rapidqa.tracer.RapidQATraceRecord
 import com.pavan.rapidqa.ui.RapidQATracerActivity
-import com.pavan.rapidqa.ui.theme.RapidQATheme
+import com.pavan.rapidqa.presentation.ui.theme.RapidQATheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var dataStore: RapidQADataStore<Long, RapidQATraceRecord>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             RapidQATheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize(),
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = {
+                                startActivity(
+                                    RapidQATracerActivity.getInstance(
+                                        context = this@MainActivity,
+                                        dataStore = dataStore
+                                    )
+                                )
+                            }
+                        ) {
+                            Icon(Icons.Default.Settings, contentDescription = "Open Tracer")
+                        }
+                    }
+                ) { innerPadding ->
                     Column(
                         modifier = Modifier
                             .padding(innerPadding)
@@ -39,18 +66,6 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Button(
-                            onClick = {
-                                startActivity(
-                                    RapidQATracerActivity.getInstance(
-                                        context = this@MainActivity
-                                    )
-                                )
-                            }
-                        ) {
-                            Text("Open Rapid QA UI")
-                        }
-
                         TestApi()
                     }
                 }
@@ -65,7 +80,11 @@ private fun TestApi(
     modifier: Modifier = Modifier
 ) {
     val testUiState by testViewModel.uiState.collectAsStateWithLifecycle()
-    Column(modifier = modifier.padding(16.dp)) {
+    Column(
+        modifier = modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
         Text(text = testUiState.testUiModel.title)
         Spacer(modifier = Modifier.padding(8.dp))
         Text(text = testUiState.testUiModel.body)

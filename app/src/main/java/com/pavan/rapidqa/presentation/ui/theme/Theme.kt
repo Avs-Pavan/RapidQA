@@ -1,4 +1,4 @@
-package com.pavan.rapidqa.ui.theme
+package com.pavan.rapidqa.presentation.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
