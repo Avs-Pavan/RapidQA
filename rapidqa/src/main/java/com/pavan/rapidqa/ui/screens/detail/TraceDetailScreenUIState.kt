@@ -7,5 +7,8 @@
 
 package com.pavan.rapidqa.ui.screens.detail
 
-class TraceDetailScreenUIState {
-}
+import com.pavan.rapidqa.tracer.RapidQATraceRecord
+
+data class TraceDetailScreenUIState(
+    val trace: RapidQATraceRecord? = null
+)

@@ -12,6 +12,8 @@ import com.pavan.rapidqa.interceptors.delay.RapidQATagDelay
 import com.pavan.rapidqa.interceptors.tag.RapidQATagNamed
 import com.pavan.rapidqa.mocker.RapidQATagMocked
 import okhttp3.Request
+import okhttp3.RequestBody
+import okio.Buffer
 
 @Immutable
 data class RapidQARequestUIModel(
@@ -19,7 +21,7 @@ data class RapidQARequestUIModel(
     val method: String,
     val url: RapidQaURL,
     val headers: List<Pair<String, String>>,
-    val body: String,
+    val body: String?,
     val tags: List<String>,
     val time: Long = System.currentTimeMillis()
 )
@@ -31,9 +33,15 @@ fun Request.toUIModel(): RapidQARequestUIModel {
         method = this.method(),
         url = this.toRapidQaURL(),
         headers = this.toHeaderList(),
-        body = this.body().toString(),
+        body = this.body()?.asString(),
         tags = this.toTags(),
     )
+}
+
+fun RequestBody.asString(): String {
+    val buffer = Buffer()
+    writeTo(buffer)
+    return buffer.readUtf8()
 }
 
 @Immutable
@@ -53,10 +61,10 @@ fun Request.toName(): String {
 
 fun Request.toTags(): List<String> {
     val tags = mutableListOf<String>()
-    val namedTag = this.tag(RapidQATagNamed::class.java)
-    if (namedTag != null) {
-        tags.add(namedTag.name)
-    }
+//    val namedTag = this.tag(RapidQATagNamed::class.java)
+//    if (namedTag != null) {
+//        tags.add(namedTag.name)
+//    }
     val mockedTag = this.tag(RapidQATagMocked::class.java)
     if (mockedTag != null) {
         tags.add("Mocked: ${mockedTag.responseCode}: ${mockedTag.fileName}")

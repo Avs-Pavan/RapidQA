@@ -28,13 +28,14 @@ fun TagUI(
     bgColor: Color = Color.LightGray,
     textColor: Color = Color.White,
     paddingValues: PaddingValues = PaddingValues(vertical = 4.dp, horizontal = 8.dp),
-    cornerRadius: Dp = 4.dp
+    cornerRadius: Dp = 4.dp,
+    modifier: Modifier = Modifier
 ) {
     Text(
         text = tag,
         style = MaterialTheme.typography.bodySmall.bold(),
         color = textColor,
-        modifier = Modifier
+        modifier = modifier
             .background(bgColor, RoundedCornerShape(cornerRadius))
             .padding(paddingValues)
     )

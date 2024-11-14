@@ -35,7 +35,7 @@ class RapidQAMockInterceptor(
                         .tag(
                             RapidQATagMocked::class.java,
                             RapidQATagMocked(
-                                fileName = annotation.fileName,
+                                fileName = annotation.fileName + ".json",
                                 responseCode = annotation.responseCode
                             )
                         )
@@ -74,7 +74,7 @@ class RapidQAMockInterceptor(
             .protocol(Protocol.HTTP_1_1)
             .request(request)
             .code(responseCode)
-            .message(mockBody.toString())
+            .message("Mock response for $fileName")
             .body(mockBody)
             .build()
     }

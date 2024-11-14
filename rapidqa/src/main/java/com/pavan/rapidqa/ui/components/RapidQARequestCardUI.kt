@@ -39,7 +39,7 @@ import kotlin.math.pow
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun RapidQARequestCardUIMin(
+fun RapidQARequestCardMinUI(
     request: RapidQARequestUIModel,
     modifier: Modifier = Modifier
 ) {
@@ -54,11 +54,6 @@ fun RapidQARequestCardUIMin(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
         ) {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = request.name,
-                style = MaterialTheme.typography.bodyMedium.bold()
-            )
             TagUI(
                 tag = request.method,
                 bgColor = when (request.method.uppercase()) {
@@ -72,6 +67,12 @@ fun RapidQARequestCardUIMin(
                 },
                 textColor = Color.White
             )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = request.name,
+                style = MaterialTheme.typography.bodyLarge.bold()
+            )
+
         }
 
         RapidQAUrlUI(
@@ -102,7 +103,8 @@ fun RapidQARequestCardUIMin(
         }
         Text(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             text = request.time.asTime(),
             style = MaterialTheme.typography.labelSmall.bold().italic(),
             textAlign = androidx.compose.ui.text.style.TextAlign.End,
@@ -134,11 +136,6 @@ fun RapidQARequestCardUI(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
         ) {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = request.name,
-                style = MaterialTheme.typography.bodyMedium.bold()
-            )
             TagUI(
                 tag = request.method,
                 bgColor = when (request.method.uppercase()) {
@@ -152,6 +149,12 @@ fun RapidQARequestCardUI(
                 },
                 textColor = Color.White
             )
+            Text(
+                modifier = Modifier.weight(1f),
+                text = request.name,
+                style = MaterialTheme.typography.bodyLarge.bold()
+            )
+
         }
 
         RapidQAUrlUI(
@@ -185,7 +188,8 @@ fun RapidQARequestCardUI(
 
         Text(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             text = request.time.asTime(),
             style = MaterialTheme.typography.labelSmall.bold().italic(),
             textAlign = androidx.compose.ui.text.style.TextAlign.End,
@@ -193,7 +197,7 @@ fun RapidQARequestCardUI(
 
         if (request.headers.isNotEmpty()) {
             Text(
-                text = "Headers:",
+                text = "Request Headers:",
                 style = MaterialTheme.typography.labelMedium.bold(),
                 modifier = Modifier.padding(vertical = 4.dp)
             )
@@ -204,9 +208,9 @@ fun RapidQARequestCardUI(
             )
         }
 
-        if (request.body.isNotEmpty()) {
+        request.body?.let {
             Text(
-                text = "Body: ${request.body.sizeInBytes().toHumanReadableSize()}",
+                text = "Request Body: ${request.body.sizeInBytes().toHumanReadableSize()}",
                 style = MaterialTheme.typography.labelMedium.bold(),
                 modifier = Modifier
                     .padding(vertical = 4.dp)
@@ -255,7 +259,7 @@ fun Int.toHumanReadableSize(): String {
 @Composable
 @Preview(showBackground = true)
 private fun V1() {
-    RapidQARequestCardUIMin(
+    RapidQARequestCardMinUI(
         request = SAMPLE_RAPID_QA_UI_MODEL
     )
 }

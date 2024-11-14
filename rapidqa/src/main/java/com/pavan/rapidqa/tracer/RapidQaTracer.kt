@@ -13,9 +13,10 @@ class RapidQaTracer(
         try {
             val initialRequest = chain.request()
             val response = chain.proceed(initialRequest)
+            val time = System.currentTimeMillis()
             dataStore.put(
-                System.currentTimeMillis(),
-                RapidQATraceRecord(request = initialRequest, response = response)
+                time,
+                RapidQATraceRecord(response = response, traceId = time)
             )
             return response
         } catch (e: Exception) {
