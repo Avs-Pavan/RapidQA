@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.pavan.rapidqa"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -41,6 +41,9 @@ dependencies {
 
     implementation(libs.retrofit)
 
+
+    // json view
+    implementation(libs.compose.json.tree)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

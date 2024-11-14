@@ -13,3 +13,14 @@ val Pink40 = Color(0xFF7D5260)
 val Teal40 = Color(0xFF1EB2A6)
 val Teal80 = Color(0xFF1EB2B0)
 val Teal60 = Color(0xFF1EB2BA)
+
+val URLColor = Color(0xFF2196F3)
+
+
+val COLOR_HTTP_GET = Color(0xFF4CAF50)
+val COLOR_HTTP_POST = Color(0xFF2196F3)
+val COLOR_HTTP_PUT = Color(0xFFFF9800)
+val COLOR_HTTP_DELETE = Color(0xFFF44336)
+val COLOR_HTTP_PATCH = Color(0xFF9C27B0)
+val COLOR_HTTP_HEAD = Color(0xFF795548)
+val COLOR_HTTP_OPTIONS = Color(0xFF607D8B)

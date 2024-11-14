@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pavan.rapidqa.ui.components.RapidQARequestCardUI
+import com.pavan.rapidqa.ui.components.toUIModel
 
 @Composable
 fun TraceListScreenUI(viewModel: TraceListViewModel, modifier: Modifier = Modifier) {
@@ -21,7 +22,7 @@ fun TraceListScreenUI(viewModel: TraceListViewModel, modifier: Modifier = Modifi
 
     LazyColumn(modifier = modifier) {
         items(uiState.traces) { trace ->
-            RapidQARequestCardUI(request = trace.request)
+            RapidQARequestCardUI(request = trace.request.toUIModel())
         }
     }
 }
