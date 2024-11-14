@@ -1,12 +1,11 @@
 package com.pavan.rapidqa.ui
 
-import com.pavan.rapidqa.ui.components.RapidQARequestUIModel
-import com.pavan.rapidqa.ui.components.RapidQaURL
+import com.pavan.rapidqa.tracer.RapidQATraceRecord
+import com.pavan.rapidqa.tracer.RapidQATraceRequest
+import com.pavan.rapidqa.tracer.RapidQaURL
+import com.pavan.rapidqa.tracer.toRapidTraceRequest
 import okhttp3.MediaType
-import okhttp3.Protocol
 import okhttp3.Request.Builder
-import okhttp3.Response
-import okhttp3.ResponseBody
 
 object RapidQAPreviewSamples {
 
@@ -20,20 +19,21 @@ object RapidQAPreviewSamples {
         .tag("Mocked: 200: sample.json")
         .build()
 
-    val SAMPLE_RESPONSE = Response.Builder()
-        .protocol(Protocol.HTTP_1_1)
-        .request(SAMPLE_GET_REQUEST)
-        .code(200)
-        .message("OK")
-        .body(
-            ResponseBody.create(
-                MediaType.parse("application/json"),
-                """{"id": 1, "title": "Sample Title"}"""
-            )
-        )
-        .build()
+    val SAMPLE_RESPONSE = RapidQATraceRecord(
+        traceId = 1,
+        totalTime = 1000,
+        serverResponseTime = 500,
+        request = SAMPLE_GET_REQUEST.toRapidTraceRequest(),
+        responseCode = 200,
+        responseMessage = "OK",
+        responseHeaders = SAMPLE_GET_REQUEST.headers()
+            .toMultimap().flatMap { it.value.map { value -> it.key to value } },
+        responseBody = "{\n  \"userId\": 1,\n  \"id\": 1,\n  \"title\": \"Sample Title\",\n  \"body\": \"Sample Body\"\n}",
+        responseContentType = MediaType.get("application/json").toString(),
+        responseContentLength = 100
+    )
 
-    val SAMPLE_RAPID_QA_UI_MODEL = RapidQARequestUIModel(
+    val SAMPLE_RAPID_QA_UI_MODEL = RapidQATraceRequest(
         name = "Sample Get Request",
         method = "GET",
         url = RapidQaURL(

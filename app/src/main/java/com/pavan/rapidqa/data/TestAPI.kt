@@ -15,7 +15,7 @@ interface TestAPI {
 
     @Named(tag = "Test API")
     @Delayed(timeMills = 2000)
-    @Mocked(fileName = "test_400", responseCode = 400)
+//    @Mocked(fileName = "test_400", responseCode = 400)
     @Headers(
         "Content-Type: application/json",
         "Authorization: Bearer your_token_here"

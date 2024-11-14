@@ -44,7 +44,7 @@ fun TraceDetailScreenUI(
             .padding(8.dp)
     ) {
         uiState.trace?.let {
-            RapidQAResponseCardUI(response = it.response)
+            RapidQAResponseCardUI(response = it)
         }
 
     }

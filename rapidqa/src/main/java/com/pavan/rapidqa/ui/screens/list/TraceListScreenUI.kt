@@ -38,7 +38,7 @@ fun TraceListScreenUI(
             .padding(8.dp)
     ) {
         items(uiState.traces) { trace ->
-            RapidQAResponseCardMinUI(response = trace.response, modifier = Modifier.clickable {
+            RapidQAResponseCardMinUI(response = trace, modifier = Modifier.clickable {
                 onTraceClick(trace.traceId)
             })
             HorizontalDivider()

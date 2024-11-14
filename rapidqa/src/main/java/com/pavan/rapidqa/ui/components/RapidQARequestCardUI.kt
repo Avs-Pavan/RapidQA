@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.pavan.rapidqa.tracer.RapidQATraceRequest
 import com.pavan.rapidqa.ui.RapidQAPreviewSamples.SAMPLE_RAPID_QA_UI_MODEL
 import com.pavan.rapidqa.ui.theme.COLOR_HTTP_DELETE
 import com.pavan.rapidqa.ui.theme.COLOR_HTTP_GET
@@ -40,7 +41,7 @@ import kotlin.math.pow
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RapidQARequestCardMinUI(
-    request: RapidQARequestUIModel,
+    request: RapidQATraceRequest,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -122,7 +123,7 @@ fun Long.asTime(): String {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RapidQARequestCardUI(
-    request: RapidQARequestUIModel,
+    request: RapidQATraceRequest,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -241,6 +242,19 @@ fun RapidQARequestCardUI(
 
 fun String.sizeInBytes(): Int {
     return this.toByteArray().size
+}
+
+fun Long.toHumanReadableSize(): String {
+    if (this <= 0) return "0 Bytes"
+    val units = arrayOf("Bytes", "KB", "MB")
+    val digitGroups =
+        (log10(this.toDouble()) / log10(1024.0)).toInt().coerceAtMost(units.size - 1)
+    return String.format(
+        locale = Locale.getDefault(),
+        "%.1f %s",
+        this / 1024.0.pow(digitGroups.toDouble()),
+        units[digitGroups],
+    )
 }
 
 fun Int.toHumanReadableSize(): String {

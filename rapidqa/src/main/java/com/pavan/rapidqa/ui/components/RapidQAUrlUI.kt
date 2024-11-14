@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.pavan.rapidqa.tracer.RapidQaURL
 import com.pavan.rapidqa.ui.theme.URLColor
 import com.pavan.rapidqa.ui.theme.bold
 import com.pavan.rapidqa.ui.theme.italic
