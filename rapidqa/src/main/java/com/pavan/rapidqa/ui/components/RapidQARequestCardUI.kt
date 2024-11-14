@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
@@ -211,7 +212,9 @@ fun RapidQARequestCardUI(
 
         request.body?.let {
             Text(
-                text = "Request Body: ${request.body.sizeInBytes().toHumanReadableSize()}",
+                text = "Request Body: ${request.contentType} ${
+                    request.body.sizeInBytes().toHumanReadableSize()
+                }",
                 style = MaterialTheme.typography.labelMedium.bold(),
                 modifier = Modifier
                     .padding(vertical = 4.dp)
@@ -225,15 +228,26 @@ fun RapidQARequestCardUI(
                     .background(Color.LightGray)
                     .padding(1.dp)
             ) {
-                Text(
-                    text = request.body,
-                    style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .background(Color.White)
-                        .padding(horizontal = 7.dp, vertical = 4.dp)
-                )
+                if (request.contentType.contains("json")) {
+                    RapidQAJsonViewerUI(
+                        jsonString = request.body,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 500.dp)
+                            .background(Color.White)
+                            .padding(8.dp)
+                    )
+                } else {
+                    Text(
+                        text = request.body,
+                        style = MaterialTheme.typography.labelSmall,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = 500.dp)
+                            .background(Color.White)
+                            .padding(horizontal = 7.dp, vertical = 4.dp)
+                    )
+                }
             }
         }
     }

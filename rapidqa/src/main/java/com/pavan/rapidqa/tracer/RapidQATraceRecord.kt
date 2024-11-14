@@ -26,6 +26,7 @@ data class RapidQATraceRequest(
     val url: RapidQaURL,
     val headers: List<Pair<String, String>>,
     val body: String?,
+    val contentType: String = "",
     val tags: List<String>,
     val time: Long = System.currentTimeMillis()
 )
@@ -38,6 +39,7 @@ fun Request.toRapidTraceRequest(): RapidQATraceRequest {
         url = this.toRapidQaURL(),
         headers = this.toHeaderList(),
         body = this.body()?.asString(),
+        contentType = this.body()?.contentType()?.toString() ?: "",
         tags = this.toTags(),
     )
 }
