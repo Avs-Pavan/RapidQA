@@ -35,7 +35,7 @@ object RapidQAPreviewSamples {
 
     val SAMPLE_RAPID_QA_UI_MODEL = RapidQATraceRequest(
         name = "Sample Get Request",
-        method = "GET",
+        method = "PATCH",
         url = RapidQaURL(
             scheme = "https",
             host = "jsonplaceholder.typicode.com",

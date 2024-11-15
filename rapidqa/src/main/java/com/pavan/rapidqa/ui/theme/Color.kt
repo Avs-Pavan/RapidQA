@@ -14,7 +14,7 @@ val Teal40 = Color(0xFF1EB2A6)
 val Teal80 = Color(0xFF1EB2B0)
 val Teal60 = Color(0xFF1EB2BA)
 
-val URLColor = Color(0xFF2196F3)
+val URLColor = Color(0xFF226EB0)
 
 
 val COLOR_HTTP_GET = Color(0xFF4CAF50)
