@@ -56,6 +56,7 @@ import com.pavan.rapidqa.ui.theme.COLOR_HTTP_POST
 import com.pavan.rapidqa.ui.theme.COLOR_HTTP_PUT
 import com.pavan.rapidqa.ui.theme.Pink80
 import com.pavan.rapidqa.ui.theme.Purple80
+import com.pavan.rapidqa.ui.theme.TEXT_COLOR_LIGHT
 import com.pavan.rapidqa.ui.theme.bold
 import com.pavan.rapidqa.ui.theme.italic
 
@@ -259,11 +260,13 @@ fun RapidQAResponseCardUI(
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp),
+                color = TEXT_COLOR_LIGHT,
                 text = "Message: " + if (response.responseMessage.isNotEmpty()) response.responseMessage else "N/A",
                 style = MaterialTheme.typography.labelSmall.bold().italic(),
             )
 
             Text(
+                color = TEXT_COLOR_LIGHT,
                 text = response.request.time.asTime(),
                 style = MaterialTheme.typography.labelSmall.bold().italic(),
                 textAlign = androidx.compose.ui.text.style.TextAlign.End,
@@ -288,7 +291,7 @@ fun RapidQAResponseCardUI(
         response.request.body?.let {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -327,6 +330,7 @@ fun RapidQAResponseCardUI(
                     Text(
                         text = response.request.body,
                         style = MaterialTheme.typography.labelSmall,
+                        color = TEXT_COLOR_LIGHT,
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(max = 500.dp)
@@ -366,10 +370,9 @@ fun RapidQAResponseCardUI(
 
         if (response.responseBody.isNotEmpty()) {
 
-
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -399,6 +402,7 @@ fun RapidQAResponseCardUI(
                 if (response.responseContentType.contains("json")) {
                     RapidQAJsonViewerUI(
                         jsonString = response.responseBody,
+
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(max = 500.dp)
@@ -461,7 +465,7 @@ fun RapidQAResponseCardUI(
                                 Text(
                                     text = response.responseBody,
                                     style = MaterialTheme.typography.labelSmall,
-                                    color = Color.Black,
+                                    color = TEXT_COLOR_LIGHT,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .heightIn(max = 500.dp)
@@ -476,7 +480,7 @@ fun RapidQAResponseCardUI(
                     Text(
                         text = response.responseBody,
                         style = MaterialTheme.typography.labelSmall,
-                        color = Color.Black,
+                        color = TEXT_COLOR_LIGHT,
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(max = 500.dp)

@@ -25,7 +25,7 @@ fun RapidQAJsonViewerUI(
         textStyle = MaterialTheme.typography.labelSmall.bold(),
         json = jsonString,
         modifier = modifier,
-        showItemCount = false,
+        showItemCount = true,
         onLoading = {
             Text("Loading...")
         },

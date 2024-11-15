@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.pavan.rapidqa.ui.theme.TEXT_COLOR_LIGHT
 
 @Composable
 fun RapidQAKeyValueListUI(
@@ -61,7 +62,8 @@ fun RapidQAKeyValueUI(
                 .padding(start = 8.dp)
                 .padding(vertical = 4.dp),
             textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelSmall,
+            color = TEXT_COLOR_LIGHT
         )
 
         VerticalDivider()
@@ -72,7 +74,8 @@ fun RapidQAKeyValueUI(
                 .weight(1f)
                 .padding(start = 8.dp),
             textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelSmall,
+            color = TEXT_COLOR_LIGHT
         )
         VerticalDivider()
 
