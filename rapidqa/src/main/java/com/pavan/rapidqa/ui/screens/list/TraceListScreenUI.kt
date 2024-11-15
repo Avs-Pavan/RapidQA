@@ -37,7 +37,7 @@ fun TraceListScreenUI(
             .background(Color.White)
             .padding(8.dp)
     ) {
-        items(uiState.traces) { trace ->
+        items(uiState.traces.reversed()) { trace ->
             RapidQAResponseCardMinUI(response = trace, modifier = Modifier.clickable {
                 onTraceClick(trace.traceId)
             })
