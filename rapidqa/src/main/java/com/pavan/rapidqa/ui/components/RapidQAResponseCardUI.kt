@@ -291,7 +291,7 @@ fun RapidQAResponseCardUI(
         response.request.body?.let {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth().padding(top = 8.dp),
+                    .fillMaxWidth().padding(top = 2.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -348,6 +348,7 @@ fun RapidQAResponseCardUI(
         )
 
         Spacer(modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.size(16.dp))
 
         if (headers.isNotEmpty()) {
             Text(
@@ -372,7 +373,7 @@ fun RapidQAResponseCardUI(
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth().padding(top = 8.dp),
+                    .fillMaxWidth().padding(top = 2.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
