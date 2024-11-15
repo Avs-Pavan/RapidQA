@@ -286,16 +286,26 @@ fun RapidQAResponseCardUI(
         }
 
         response.request.body?.let {
-            Text(
-                text = "Request Body: ${response.request.contentType} ${
-                    response.request.body.sizeInBytes().toHumanReadableSize()
-                }",
-                style = MaterialTheme.typography.labelMedium.bold(),
+            Row(
                 modifier = Modifier
-                    .padding(vertical = 4.dp)
-                    .padding(top = 8.dp)
-                    .padding(bottom = 4.dp)
-            )
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Request Body: ${response.request.contentType}",
+                    style = MaterialTheme.typography.labelMedium.bold(),
+                    modifier = Modifier
+                        .padding(vertical = 4.dp)
+                        .weight(1f)
+                        .padding(top = 8.dp)
+                        .padding(bottom = 4.dp)
+                )
+                TagUI(
+                    textColor = Color.Black,
+                    tag = response.request.body.sizeInBytes().toHumanReadableSize()
+                )
+            }
 
             Box(
                 modifier = Modifier
@@ -356,16 +366,28 @@ fun RapidQAResponseCardUI(
 
         if (response.responseBody.isNotEmpty()) {
 
-            Text(
-                text = "Response Body: ${
-                    response.responseContentType
-                } ${response.responseBody.sizeInBytes().toHumanReadableSize()}",
-                style = MaterialTheme.typography.labelMedium.bold(),
+
+            Row(
                 modifier = Modifier
-                    .padding(vertical = 4.dp)
-                    .padding(top = 8.dp)
-                    .padding(bottom = 4.dp)
-            )
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Response Body: ${response.responseContentType}",
+                    style = MaterialTheme.typography.labelMedium.bold(),
+                    modifier = Modifier
+                        .padding(vertical = 4.dp)
+                        .padding(top = 8.dp)
+                        .weight(1f)
+                        .padding(bottom = 4.dp)
+                )
+
+                TagUI(
+                    textColor = Color.Black,
+                    tag = response.responseBody.sizeInBytes().toHumanReadableSize()
+                )
+            }
 
             Box(
                 modifier = Modifier
@@ -481,6 +503,15 @@ fun RapidQAResponseCardUI(
 @Composable
 private fun V1() {
     RapidQAResponseCardMinUI(
+        response = RapidQAPreviewSamples.SAMPLE_RESPONSE
+    )
+}
+
+
+@Preview(showBackground = true)
+@Composable
+private fun V2() {
+    RapidQAResponseCardUI(
         response = RapidQAPreviewSamples.SAMPLE_RESPONSE
     )
 }

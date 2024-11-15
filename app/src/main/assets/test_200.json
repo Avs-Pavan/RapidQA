@@ -1,4 +1,227 @@
 {
-  "title": "Ghost in the Shell",
-  "body": "This is a mock JSON file.\n Mocked using Ghost Mocker"
+  "platform": {
+    "name": "Shoply",
+    "version": "1.2.3",
+    "website": "https://shoply.com",
+    "supported_languages": [
+      "en",
+      "es",
+      "fr",
+      "de"
+    ],
+    "metadata": {
+      "creation_date": "2023-01-15",
+      "last_update": "2024-11-14"
+    }
+  },
+  "users": [
+    {
+      "user_id": "U1001",
+      "name": {
+        "first": "John",
+        "last": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "phone": "+123456789",
+      "preferences": {
+        "currency": "USD",
+        "language": "en",
+        "notifications": {
+          "email": true,
+          "sms": false,
+          "push": true
+        }
+      },
+      "address": {
+        "billing": {
+          "street": "123 Maple St",
+          "city": "Springfield",
+          "zip": "12345",
+          "country": "USA"
+        },
+        "shipping": [
+          {
+            "street": "123 Maple St",
+            "city": "Springfield",
+            "zip": "12345",
+            "country": "USA"
+          },
+          {
+            "street": "456 Oak St",
+            "city": "Greendale",
+            "zip": "67890",
+            "country": "USA"
+          }
+        ]
+      },
+      "order_history": [
+        {
+          "order_id": "O2001",
+          "status": "delivered",
+          "items": [
+            {
+              "item_id": "I3001",
+              "name": "Wireless Mouse",
+              "category": "Electronics",
+              "price": 25.99,
+              "quantity": 1,
+              "discount": {
+                "type": "percentage",
+                "value": 10
+              }
+            },
+            {
+              "item_id": "I3002",
+              "name": "Keyboard",
+              "category": "Electronics",
+              "price": 45.0,
+              "quantity": 1,
+              "discount": null
+            }
+          ],
+          "total": 64.39,
+          "shipping_method": "Standard",
+          "tracking_info": {
+            "carrier": "UPS",
+            "tracking_number": "1Z12345E0205271688",
+            "estimated_delivery": "2024-11-18"
+          }
+        }
+      ],
+      "wishlist": [
+        {
+          "item_id": "I3003",
+          "name": "Bluetooth Speaker",
+          "category": "Electronics",
+          "price": 30.0
+        },
+        {
+          "item_id": "I3004",
+          "name": "Yoga Mat",
+          "category": "Sports",
+          "price": 20.0
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "categories": [
+      {
+        "id": "C100",
+        "name": "Electronics",
+        "subcategories": [
+          {
+            "id": "SC200",
+            "name": "Computers",
+            "products": [
+              {
+                "product_id": "P4001",
+                "name": "Laptop",
+                "description": "15-inch laptop with 8GB RAM and 256GB SSD",
+                "price": 700.0,
+                "stock": 25,
+                "rating": 4.5,
+                "reviews": [
+                  {
+                    "user_id": "U1002",
+                    "rating": 5,
+                    "comment": "Great product!",
+                    "timestamp": "2024-11-01T10:20:30Z"
+                  },
+                  {
+                    "user_id": "U1003",
+                    "rating": 4,
+                    "comment": "Good, but battery life could be better.",
+                    "timestamp": "2024-11-05T14:15:45Z"
+                  }
+                ],
+                "variants": [
+                  {
+                    "variant_id": "V5001",
+                    "color": "Silver",
+                    "price_modifier": 0,
+                    "stock": 15
+                  },
+                  {
+                    "variant_id": "V5002",
+                    "color": "Black",
+                    "price_modifier": 20.0,
+                    "stock": 10
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C101",
+        "name": "Home & Kitchen",
+        "subcategories": [
+          {
+            "id": "SC201",
+            "name": "Furniture",
+            "products": [
+              {
+                "product_id": "P4002",
+                "name": "Sofa",
+                "description": "Comfortable 3-seater sofa",
+                "price": 300.0,
+                "stock": 5,
+                "rating": 4.2,
+                "reviews": [],
+                "variants": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "transactions": [
+    {
+      "transaction_id": "T7001",
+      "user_id": "U1001",
+      "order_id": "O2001",
+      "amount": 64.39,
+      "currency": "USD",
+      "status": "completed",
+      "timestamp": "2024-11-13T08:00:00Z",
+      "payment_method": "Credit Card",
+      "payment_details": {
+        "card_type": "Visa",
+        "card_last_four": "1234",
+        "billing_address": {
+          "street": "123 Maple St",
+          "city": "Springfield",
+          "zip": "12345",
+          "country": "USA"
+        }
+      }
+    }
+  ],
+  "support": {
+    "tickets": [
+      {
+        "ticket_id": "TKT9001",
+        "user_id": "U1001",
+        "issue": "Product not received",
+        "status": "open",
+        "created_at": "2024-11-10T12:00:00Z",
+        "updated_at": "2024-11-11T14:00:00Z",
+        "messages": [
+          {
+            "sender": "user",
+            "message": "I haven’t received my order yet.",
+            "timestamp": "2024-11-10T12:01:00Z"
+          },
+          {
+            "sender": "support",
+            "message": "We’re looking into this.",
+            "timestamp": "2024-11-11T14:00:00Z"
+          }
+        ]
+      }
+    ]
+  }
 }

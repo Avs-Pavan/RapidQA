@@ -13,7 +13,7 @@ import retrofit2.http.POST
 
 interface TestAPI {
 
-    @Named(tag = "Test API")
+    @Named(tag = "Get API")
     @Delayed(timeMills = 2000)
 //    @Mocked(fileName = "test_400", responseCode = 400)
     @Headers(
@@ -23,7 +23,7 @@ interface TestAPI {
     @GET("test")
     suspend fun getTest(): Response<TestDTO>
 
-    @Named(tag = "Post Test API")
+    @Named(tag = "Post API")
     @Mocked(fileName = "test_200", responseCode = 200)
     @Headers(
         "Content-Type: application/json",
