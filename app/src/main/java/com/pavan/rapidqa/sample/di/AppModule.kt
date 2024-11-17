@@ -1,10 +1,10 @@
-package com.pavan.rapidqa.di
+package com.pavan.rapidqa.sample.di
 
 import android.content.Context
-import com.pavan.rapidqa.data.TestAPI
 import com.pavan.rapidqa.interceptors.delay.RapidQADelayInterceptor
 import com.pavan.rapidqa.interceptors.tag.RapidQANameTagInterceptor
 import com.pavan.rapidqa.mocker.RapidQAMockInterceptor
+import com.pavan.rapidqa.sample.data.TestAPI
 import com.pavan.rapidqa.store.RapidQADataStore
 import com.pavan.rapidqa.store.RapidQAInMemoryDataStore
 import com.pavan.rapidqa.tracer.RapidQATraceRecord

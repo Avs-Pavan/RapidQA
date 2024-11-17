@@ -1,4 +1,4 @@
-package com.pavan.rapidqa.presentation.ui.theme
+package com.pavan.rapidqa.sample.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

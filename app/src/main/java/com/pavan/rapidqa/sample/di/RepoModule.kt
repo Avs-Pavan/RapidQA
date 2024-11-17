@@ -1,7 +1,8 @@
-package com.pavan.rapidqa.di
+package com.pavan.rapidqa.sample.di
 
-import com.pavan.rapidqa.data.GhostRepoImpl
-import com.pavan.rapidqa.domain.GhostRepo
+
+import com.pavan.rapidqa.sample.data.GhostRepoImpl
+import com.pavan.rapidqa.sample.domain.GhostRepo
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

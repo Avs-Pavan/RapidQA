@@ -1,9 +1,10 @@
-package com.pavan.rapidqa.data
+package com.pavan.rapidqa.sample.data
 
-import com.pavan.rapidqa.data.model.TestDTO
-import com.pavan.rapidqa.domain.GhostRepo
-import com.pavan.rapidqa.domain.Result
-import com.pavan.rapidqa.domain.TestModel
+
+import com.pavan.rapidqa.sample.data.model.TestDTO
+import com.pavan.rapidqa.sample.domain.GhostRepo
+import com.pavan.rapidqa.sample.domain.Result
+import com.pavan.rapidqa.sample.domain.TestModel
 import javax.inject.Inject
 
 class GhostRepoImpl @Inject constructor(

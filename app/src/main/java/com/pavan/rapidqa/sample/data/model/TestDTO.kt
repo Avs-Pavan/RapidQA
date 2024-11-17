@@ -1,4 +1,4 @@
-package com.pavan.rapidqa.data.model
+package com.pavan.rapidqa.sample.data.model
 
 data class TestDTO(
     val title: String = "",

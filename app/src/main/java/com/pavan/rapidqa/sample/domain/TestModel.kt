@@ -1,4 +1,4 @@
-package com.pavan.rapidqa.domain
+package com.pavan.rapidqa.sample.domain
 
 data class TestModel(
     val title: String,

@@ -1,4 +1,4 @@
-package com.pavan.rapidqa.domain
+package com.pavan.rapidqa.sample.domain
 
 interface GhostRepo {
     suspend fun testGet(): Result<TestModel, Exception>

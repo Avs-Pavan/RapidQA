@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.RapidQATracerActivity" />
+        <activity android:name="com.pavan.rapidqa.ui.RapidQATracerActivity" />
     </application>
 
 </manifest>

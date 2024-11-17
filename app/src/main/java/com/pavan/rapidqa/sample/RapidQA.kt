@@ -1,7 +1,7 @@
-package com.pavan.rapidqa;
+package com.pavan.rapidqa.sample
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
- class RapidQA:Application()
+ class RapidQA: Application()

@@ -1,9 +1,10 @@
-package com.pavan.rapidqa.data
+package com.pavan.rapidqa.sample.data
 
-import com.pavan.rapidqa.data.model.TestDTO
+
 import com.pavan.rapidqa.interceptors.delay.Delayed
 import com.pavan.rapidqa.interceptors.tag.Named
 import com.pavan.rapidqa.mocker.Mocked
+import com.pavan.rapidqa.sample.data.model.TestDTO
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

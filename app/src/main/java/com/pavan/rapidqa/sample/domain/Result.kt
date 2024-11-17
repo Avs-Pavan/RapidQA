@@ -1,4 +1,4 @@
-package com.pavan.rapidqa.domain
+package com.pavan.rapidqa.sample.domain
 
 sealed interface Result<T, E> {
     data class Success<T, E>(val data: T) : Result<T, E>

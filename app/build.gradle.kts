@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.pavan.rapidqa"
+    namespace = "com.pavan.rapidqa.sample"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.pavan.rapidqa"
+        applicationId = "com.pavan.rapidqa.sample"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

@@ -1,4 +1,4 @@
-package com.pavan.rapidqa.presentation
+package com.pavan.rapidqa.sample.presentation
 
 sealed interface UIState<T> {
     data object Loading : UIState<Nothing>

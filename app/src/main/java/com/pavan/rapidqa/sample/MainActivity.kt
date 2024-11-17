@@ -1,4 +1,4 @@
-package com.pavan.rapidqa
+package com.pavan.rapidqa.sample
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,14 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.pavan.rapidqa.presentation.TestViewModel
+import com.pavan.rapidqa.sample.presentation.TestViewModel
+import com.pavan.rapidqa.sample.presentation.ui.theme.RapidQASampleTheme
 import com.pavan.rapidqa.store.RapidQADataStore
 import com.pavan.rapidqa.tracer.RapidQATraceRecord
 import com.pavan.rapidqa.ui.RapidQATracerActivity
-import com.pavan.rapidqa.presentation.ui.theme.RapidQATheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RapidQATheme {
+            RapidQASampleTheme {
                 Scaffold(modifier = Modifier.fillMaxSize(),
                     floatingActionButton = {
                         FloatingActionButton(
@@ -89,6 +90,6 @@ private fun TestApi(
         Spacer(modifier = Modifier.padding(8.dp))
         Text(text = testUiState.testUiModel.body)
         Spacer(modifier = Modifier.padding(8.dp))
-        Text(text = testUiState.error, color = androidx.compose.ui.graphics.Color.Red)
+        Text(text = testUiState.error, color = Color.Red)
     }
 }
