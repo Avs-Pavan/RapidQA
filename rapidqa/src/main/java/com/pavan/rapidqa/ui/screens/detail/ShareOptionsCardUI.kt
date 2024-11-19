@@ -44,14 +44,20 @@ import androidx.compose.ui.unit.dp
 import com.pavan.rapidqa.R
 import com.pavan.rapidqa.ui.theme.Teal40
 
+sealed class RapidQaExportEvent {
+    data class Share(val fileName: String, val rapidQaExportOption: RapidQaExportOption) :
+        RapidQaExportEvent()
+}
+
 @Composable
 fun ShareOptionsCardUI(
     modifier: Modifier = Modifier,
-    isVisible: Boolean = true
+    isVisible: Boolean = true,
+    onShareClick: (RapidQaExportEvent) -> Unit = { }
 ) {
     var fileName by remember { mutableStateOf("") }
-    val selectedType = remember { mutableStateOf("OpenAPI") }
-    val options = listOf("OpenAPI", "Text", "Json")
+    val selectedType = remember { mutableStateOf(RapidQaExportOption.OPEN_API) }
+    val options = RapidQaExportOption.entries.toTypedArray()
 
     AnimatedVisibility(
         visible = isVisible,
@@ -106,35 +112,41 @@ fun ShareOptionsCardUI(
                             .padding(horizontal = 8.dp, vertical = 6.dp),
                         selected = selectedType.value == option,
                         onClick = { selectedType.value = option },
-                        label = { Text(option) },
+                        label = { Text(option.displayName) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = Color.White,
                             selectedLabelColor = Teal40,
                             labelColor = Color.White,
                             selectedLeadingIconColor = Teal40,
-                            iconColor = Color.LightGray
+                            iconColor = Color.White
                         ),
-                        leadingIcon = if (option == "OpenAPI") {
-                            {
-                                Icon(
-                                    painterResource(id = R.drawable.baseline_code_24),
-                                    contentDescription = null,
-                                )
+                        leadingIcon = when (option) {
+                            RapidQaExportOption.OPEN_API -> {
+                                {
+                                    Icon(
+                                        painterResource(id = R.drawable.baseline_code_24),
+                                        contentDescription = null,
+                                    )
+                                }
                             }
-                        } else if (option == "Text") {
-                            {
-                                Icon(
-                                    painterResource(id = R.drawable.baseline_text_snippet_24),
-                                    contentDescription = null,
-                                )
+
+                            RapidQaExportOption.TEXT -> {
+                                {
+                                    Icon(
+                                        painterResource(id = R.drawable.baseline_text_snippet_24),
+                                        contentDescription = null,
+                                    )
+                                }
                             }
-                        } else {
-                            {
-                                Icon(
-                                    painterResource(id = R.drawable.braces),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(20.dp)
-                                )
+
+                            RapidQaExportOption.JSON -> {
+                                {
+                                    Icon(
+                                        painterResource(id = R.drawable.braces),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
                             }
                         }
                     )
@@ -142,7 +154,14 @@ fun ShareOptionsCardUI(
             }
 
             Button(
-                onClick = { /* Handle share action */ },
+                onClick = {
+                    onShareClick(
+                        RapidQaExportEvent.Share(
+                            fileName = fileName,
+                            rapidQaExportOption = selectedType.value
+                        )
+                    )
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -152,6 +171,13 @@ fun ShareOptionsCardUI(
             }
         }
     }
+}
+
+
+enum class RapidQaExportOption(val displayName: String) {
+    OPEN_API("OpenAPI"),
+    TEXT("Text"),
+    JSON("Json")
 }
 
 @Composable
