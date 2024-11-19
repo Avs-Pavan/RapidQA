@@ -49,40 +49,40 @@ ${request.toText()}
 
 ******************** RESPONSE *******************
 
-Response Code: ${responseCode ?: "N/A"}
-Response Message: ${responseMessage ?: "N/A"}
-Response Content Type: ${responseContentType ?: "N/A"}
-Response Content Length: ${responseContentLength ?: "N/A"}
-Trace ID: ${traceId ?: "N/A"}
-Total Time: ${totalTime ?: "N/A"}
-Server Response Time: ${serverResponseTime ?: "N/A"}
+Response Code: $responseCode
+Response Message: ${responseMessage.takeIf { it.isNotEmpty() } ?: "N/A"}
+Response Content Type: ${responseContentType.takeIf { it.isNotEmpty() } ?: "N/A"}
+Response Content Length: $responseContentLength
+Trace ID: $traceId
+Total Time: $totalTime
+Server Response Time: $serverResponseTime
 
 Response Headers:
 ${responseHeaders.joinToString("\n") { "  ${it.first}: ${it.second}" }}
 
 Response Body:
-${responseBody ?: "N/A"}
+${responseBody.takeIf { it.isNotEmpty() } ?: "N/A"}
 
 *************************************************
-        """.trimIndent()
+    """.trimIndent()
     }
 
     fun RapidQATraceRequest.toText(): String {
         return """
-Name: ${name ?: "N/A"}
-Method: ${method ?: "N/A"}
-URL: ${url.encodedUrl ?: "N/A"}
-Content Type: ${contentType ?: "N/A"}
+Name: ${name.takeIf { it.isNotEmpty() } ?: "N/A"}
+Method: ${method.takeIf { it.isNotEmpty() } ?: "N/A"}
+URL: ${url.encodedUrl.takeIf { it.isNotEmpty() } ?: "N/A"}
+Content Type: ${contentType.takeIf { it.isNotEmpty() } ?: "N/A"}
 Tags:
-${tags.joinToString("\n") { "  $it" }}
-Time: ${time.asTime() ?: "N/A"}
+${tags.joinToString("\n") { "  ${it.takeIf { it.isNotEmpty() } ?: "N/A"}" }}
+Time: ${time.asTime()}
 
 Headers:
 ${headers.joinToString("\n") { "  ${it.first}: ${it.second}" }}
 
 Body:
-${body ?: "N/A"}
-        """.trimIndent()
+${body.takeIf { !it.isNullOrEmpty() } ?: "N/A"}
+    """.trimIndent()
     }
 }
 
