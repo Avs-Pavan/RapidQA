@@ -7,6 +7,9 @@
 
 package com.pavan.rapidqa.ui.screens.list
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,18 +36,23 @@ fun FilterHeader(
     showFilters: Boolean,
     modifier: Modifier = Modifier
 ) {
-    if (showFilters) {
+    AnimatedVisibility(
+        visible = showFilters,
+        enter = expandVertically(),
+        exit = shrinkVertically()
+    ) {
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .background(Color.White)
+                .background(Teal40)
         ) {
             val filterColors = FilterChipDefaults.filterChipColors().copy(
-                selectedLabelColor = Color.White,
-                selectedContainerColor = Teal40
+                selectedLabelColor = Teal40,
+                selectedContainerColor = Color.White,
+                labelColor = Color.White,
             )
 
-            Text(text = "Request Methods", modifier = Modifier.padding(8.dp))
+            Text(text = "Request Methods", color = Color.White, modifier = Modifier.padding(8.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -62,7 +70,7 @@ fun FilterHeader(
                 }
             }
 
-            Text(text = "Response Codes", modifier = Modifier.padding(8.dp))
+            Text(text = "Response Codes", color = Color.White, modifier = Modifier.padding(8.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

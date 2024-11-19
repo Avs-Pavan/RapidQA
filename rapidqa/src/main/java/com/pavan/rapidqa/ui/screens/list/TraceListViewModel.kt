@@ -55,6 +55,12 @@ class TraceListViewModel(
         }
     }
 
+    fun onFilterClicked() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(showFilters = !_uiState.value.showFilters)
+        }
+    }
+
     private fun filterTraces() {
         val currentState = _uiState.value
         val filteredTraces = originalTraces.filter { trace ->
