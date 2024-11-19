@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.toString
 
 class TraceListViewModel(
     private val dataStore: RapidQADataStore<Long, RapidQATraceRecord>
@@ -37,11 +38,48 @@ class TraceListViewModel(
         Log.e(TAG, "CoroutineExceptionHandler", throwable)
     }
 
+    private val originalTraces = mutableListOf<RapidQATraceRecord>()
+
+
+    fun onResponseCodeSelected(responseCode: ResponseCode) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(selectedResponseCode = responseCode)
+            filterTraces()
+        }
+    }
+
+    fun onMethodTypeSelected(methodType: MethodType) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(selectedMethodType = methodType)
+            filterTraces()
+        }
+    }
+
+    private fun filterTraces() {
+        val currentState = _uiState.value
+        val filteredTraces = originalTraces.filter { trace ->
+            val responseCodeMatches = when (currentState.selectedResponseCode) {
+                ResponseCode.ALL -> true
+                ResponseCode.CODE_200 -> trace.responseCode in 200..299
+                ResponseCode.CODE_300 -> trace.responseCode in 300..399
+                ResponseCode.CODE_400 -> trace.responseCode in 400..499
+                ResponseCode.CODE_500 -> trace.responseCode in 500..599
+                else -> true
+            }
+            val methodTypeMatches =
+                currentState.selectedMethodType == MethodType.ALL || trace.request.method == currentState.selectedMethodType.method
+            responseCodeMatches && methodTypeMatches
+        }
+        _uiState.value = currentState.copy(traces = filteredTraces)
+    }
+
     private fun getTraces() {
         viewModelScope.launch(globalExceptionHandler) {
             dataStore.getAll().let { traces ->
+                originalTraces.clear()
+                originalTraces.addAll(traces.entries.sortedBy { it.key }.map { it.value })
                 _uiState.update {
-                    it.copy(traces = traces.entries.sortedBy { it.key }.map { it.value })
+                    it.copy(traces = originalTraces)
                 }
             }
         }

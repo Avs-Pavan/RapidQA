@@ -10,5 +10,7 @@ package com.pavan.rapidqa.ui.screens.list
 import com.pavan.rapidqa.tracer.RapidQATraceRecord
 
 data class TraceListScreenUIState (
-    val traces: List<RapidQATraceRecord> = emptyList()
+    val traces: List<RapidQATraceRecord> = emptyList(),
+    val selectedResponseCode: ResponseCode = ResponseCode.ALL,
+    val selectedMethodType: MethodType = MethodType.ALL
 )

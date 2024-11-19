@@ -9,6 +9,7 @@ package com.pavan.rapidqa.ui.screens.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,18 +31,28 @@ fun TraceListScreenUI(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val filteredList = uiState.traces
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .padding(8.dp)
-    ) {
-        items(uiState.traces.reversed()) { trace ->
-            RapidQAResponseCardMinUI(response = trace, modifier = Modifier.clickable {
-                onTraceClick(trace.traceId)
-            })
-            HorizontalDivider()
+    Column {
+        FilterHeader(
+            selectedResponseCode = uiState.selectedResponseCode,
+            onResponseCodeSelected = { viewModel.onResponseCodeSelected(it) },
+            selectedMethodType = uiState.selectedMethodType,
+            onMethodTypeSelected = { viewModel.onMethodTypeSelected(it) },
+            showFilters = true
+        )
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(8.dp)
+        ) {
+            items(filteredList.reversed()) { trace ->
+                RapidQAResponseCardMinUI(response = trace, modifier = Modifier.clickable {
+                    onTraceClick(trace.traceId)
+                })
+                HorizontalDivider()
+            }
         }
     }
 }
