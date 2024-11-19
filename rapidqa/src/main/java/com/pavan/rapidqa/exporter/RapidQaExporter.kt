@@ -7,9 +7,10 @@
 
 package com.pavan.rapidqa.exporter
 
+import android.content.Context
 import com.pavan.rapidqa.tracer.RapidQATraceRecord
 import java.io.File
 
 sealed interface RapidQaExporter {
-    fun export(traceRecord: RapidQATraceRecord, fileName: String): File
+    fun export(context: Context, traceRecord: RapidQATraceRecord, fileName: String): File
 }

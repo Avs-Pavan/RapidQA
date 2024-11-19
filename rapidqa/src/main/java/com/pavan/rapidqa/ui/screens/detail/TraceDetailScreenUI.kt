@@ -8,7 +8,6 @@
 package com.pavan.rapidqa.ui.screens.detail
 
 import android.content.Context
-import android.content.Intent
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,7 +35,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pavan.rapidqa.R
 import com.pavan.rapidqa.ui.components.RapidQAResponseCardUI
@@ -51,6 +49,7 @@ fun TraceDetailScreenUI(
     modifier: Modifier = Modifier,
     viewModel: TraceDetailViewModel
 ) {
+
 
     val context = LocalContext.current
 
@@ -114,8 +113,9 @@ fun TraceDetailScreenUI(
                                     shareTextFile(
                                         context = context,
                                         file = viewModel.textExporter.export(
-                                            trace,
-                                            "RapidQA_Trace_${event.fileName.trim()}_${
+                                            context = context,
+                                            traceRecord = trace,
+                                            fileName = "RapidQA_Trace_${event.fileName.trim()}_${
                                                 trace.traceId.asTime().replace(" ", "_")
                                             }.txt"
                                         )
@@ -143,11 +143,12 @@ fun TraceDetailScreenUI(
 }
 
 fun shareTextFile(context: Context, file: File) {
-    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
-    val shareIntent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_STREAM, uri)
-        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    }
-    context.startActivity(Intent.createChooser(shareIntent, "Share file using"))
+//    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
+//    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+//        type = "text/plain"
+//        putExtra(Intent.EXTRA_STREAM, uri)
+//        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//    }
+//    context.startActivity(Intent.createChooser(shareIntent, "Share file using"))
 }
+
