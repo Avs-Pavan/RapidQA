@@ -69,7 +69,7 @@ fun RapidQAResponseCardMinUI(
 ) {
     Column(
         modifier = modifier
-            .padding(vertical = 8.dp, horizontal = 4.dp)
+            .padding(vertical = 12.dp, horizontal = 4.dp)
             .paddingFromBaseline(bottom = 8.dp)
     ) {
         Row(

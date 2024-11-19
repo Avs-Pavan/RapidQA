@@ -25,6 +25,10 @@ class RapidQADelayInterceptor(
                 return chain.proceed(initialRequest)
             }
 
+            if (annotation.timeMills < 0) {
+                throw IllegalArgumentException("Delay time cannot be negative")
+            }
+
             Thread.sleep(annotation.timeMills)
 
             val newRequest = initialRequest.newBuilder()
