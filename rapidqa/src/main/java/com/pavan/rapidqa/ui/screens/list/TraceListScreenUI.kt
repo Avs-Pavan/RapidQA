@@ -43,7 +43,6 @@ fun TraceListScreenUI(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val filteredList = uiState.traces
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -93,7 +92,7 @@ fun TraceListScreenUI(
                     .background(Color.White)
                     .padding(8.dp)
             ) {
-                items(filteredList.reversed()) { trace ->
+                items(uiState.traces) { trace ->
                     RapidQAResponseCardMinUI(response = trace, modifier = Modifier.clickable {
                         onTraceClick(trace.traceId)
                     })
