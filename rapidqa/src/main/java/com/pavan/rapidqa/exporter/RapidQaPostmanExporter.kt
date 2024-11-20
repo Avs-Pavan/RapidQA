@@ -16,7 +16,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 
-class RapidQaOpenApiExporter : RapidQaExporter {
+class RapidQaPostmanExporter : RapidQaExporter {
     override fun export(
         context: Context,
         traceRecord: RapidQATraceRecord,
@@ -131,8 +131,7 @@ class RapidQaOpenApiExporter : RapidQaExporter {
         ${System.currentTimeMillis().asTime()}
         
         ### ❤️ RapidQA by :
-        Venkata Sai Pavan, Arepalli
-        Email: [avspavan1234@gmail.com](mailto:avspavan1234@gmail.com)
+        Pavan, Arepalli
         GitHub: [https://github.com/Avs-Pavan/RapidQA](https://github.com/Avs-Pavan/RapidQA)
     """.trimIndent()
     }

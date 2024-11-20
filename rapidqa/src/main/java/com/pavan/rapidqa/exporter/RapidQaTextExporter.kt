@@ -41,8 +41,7 @@ class RapidQaTextExporter : RapidQaExporter {
     fun RapidQATraceRecord.toText(description: String): String {
         return """
 /*************************************************
-* Author: Venkata Sai Pavan, Arepalli
-* Email: avspavan1234@gmail.com
+* Author: Pavan, Arepalli
 * GitHub: https://github.com/Avs-Pavan/RapidQA
 *************************************************/
 
