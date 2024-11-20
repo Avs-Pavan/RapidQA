@@ -10,6 +10,8 @@ package com.pavan.rapidqa.ui.screens.detail
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pavan.rapidqa.exporter.RapidQaOpenApiExporter
+import com.pavan.rapidqa.exporter.RapidQaTextExporter
 import com.pavan.rapidqa.store.RapidQADataStore
 import com.pavan.rapidqa.tracer.RapidQATraceRecord
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -22,6 +24,10 @@ class TraceDetailViewModel constructor(
     private val dataStore: RapidQADataStore<Long, RapidQATraceRecord>
 ) : ViewModel() {
 
+    val textExporter by lazy { RapidQaTextExporter() }
+
+    val openApiExporter by lazy { RapidQaOpenApiExporter() }
+
     private val _uiState = MutableStateFlow<TraceDetailScreenUIState>(TraceDetailScreenUIState())
     val uiState = _uiState.asStateFlow()
 
@@ -29,16 +35,19 @@ class TraceDetailViewModel constructor(
         Log.e(TAG, "CoroutineExceptionHandler", throwable)
     }
 
+    lateinit var traceRecord: RapidQATraceRecord
 
     fun getTrace(traceId: Long) {
         viewModelScope.launch(globalExceptionHandler) {
             dataStore.get(traceId)?.let { trace ->
+                traceRecord = trace
                 _uiState.update {
                     TraceDetailScreenUIState(trace)
                 }
             }
         }
     }
+
 
     companion object {
         private const val TAG = "RapidQa - TraceDetailViewModel"

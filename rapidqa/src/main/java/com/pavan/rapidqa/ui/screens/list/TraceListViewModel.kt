@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.toString
 
 class TraceListViewModel(
     private val dataStore: RapidQADataStore<Long, RapidQATraceRecord>
@@ -76,7 +75,7 @@ class TraceListViewModel(
                 currentState.selectedMethodType == MethodType.ALL || trace.request.method == currentState.selectedMethodType.method
             responseCodeMatches && methodTypeMatches
         }
-        _uiState.value = currentState.copy(traces = filteredTraces)
+        _uiState.value = currentState.copy(traces = filteredTraces.reversed())
     }
 
     private fun getTraces() {
@@ -85,7 +84,7 @@ class TraceListViewModel(
                 originalTraces.clear()
                 originalTraces.addAll(traces.entries.sortedBy { it.key }.map { it.value })
                 _uiState.update {
-                    it.copy(traces = originalTraces)
+                    it.copy(traces = originalTraces.reversed())
                 }
             }
         }
