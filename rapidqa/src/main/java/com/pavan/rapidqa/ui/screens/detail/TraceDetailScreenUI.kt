@@ -127,7 +127,7 @@ fun TraceDetailScreenUI(
 //                                //viewModel.jsonExporter.export(uiState.trace!!, "RapidQA_Trace_${uiState.trace?.traceId}.json")
 //                            }
 
-                            RapidQaExportOption.OPEN_API -> {
+                            RapidQaExportOption.POSTMAN -> {
                                 uiState.trace?.let { trace ->
                                     shareTextFile(
                                         context = context,

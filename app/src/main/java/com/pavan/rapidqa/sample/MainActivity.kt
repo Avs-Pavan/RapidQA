@@ -6,13 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -22,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -56,7 +55,10 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                         ) {
-                            Icon(Icons.Default.Settings, contentDescription = "Open Tracer")
+                            Icon(
+                                painter = painterResource(R.drawable.baseline_code_24),
+                                contentDescription = "Open Tracer"
+                            )
                         }
                     }
                 ) { innerPadding ->
@@ -84,12 +86,29 @@ private fun TestApi(
     Column(
         modifier = modifier
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+
+        Button(onClick = {
+            testViewModel.postTest()
+        }) {
+            Text(text = "Make POST API Call")
+        }
+
+        Button(onClick = {
+            testViewModel.getTest()
+        }) {
+            Text(text = "Make GET API Call")
+        }
+
+
         Text(text = testUiState.testUiModel.title)
-        Spacer(modifier = Modifier.padding(8.dp))
+
         Text(text = testUiState.testUiModel.body)
-        Spacer(modifier = Modifier.padding(8.dp))
+
         Text(text = testUiState.error, color = Color.Red)
     }
 }

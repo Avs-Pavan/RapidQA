@@ -16,7 +16,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 
-class RapidQaOpenApiExporter : RapidQaExporter {
+class RapidQaPostmanExporter : RapidQaExporter {
     override fun export(
         context: Context,
         traceRecord: RapidQATraceRecord,
@@ -66,6 +66,9 @@ class RapidQaOpenApiExporter : RapidQaExporter {
         val formattedResponseHeaders = responseHeaders.map { header ->
             mapOf("key" to header.first, "value" to header.second)
         }
+        val requestBody = request.body?.takeIf { it.isNotEmpty() }?.let {
+            mapOf("mode" to "raw", "raw" to it)
+        }
 
         val postmanCollection = mapOf(
             "info" to mapOf(
@@ -79,10 +82,7 @@ class RapidQaOpenApiExporter : RapidQaExporter {
                     "request" to mapOf(
                         "method" to request.method,
                         "header" to formattedRequestHeaders,
-                        "body" to mapOf(
-                            "mode" to "raw",
-                            "raw" to (request.body ?: "N/A")
-                        ),
+                        "body" to requestBody,
                         "url" to mapOf(
                             "raw" to request.url.encodedUrl,
                             "protocol" to request.url.scheme,
@@ -131,8 +131,7 @@ class RapidQaOpenApiExporter : RapidQaExporter {
         ${System.currentTimeMillis().asTime()}
         
         ### ❤️ RapidQA by :
-        Venkata Sai Pavan, Arepalli
-        Email: [avspavan1234@gmail.com](mailto:avspavan1234@gmail.com)
+        Pavan, Arepalli  <br>
         GitHub: [https://github.com/Avs-Pavan/RapidQA](https://github.com/Avs-Pavan/RapidQA)
     """.trimIndent()
     }

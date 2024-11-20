@@ -10,7 +10,7 @@ package com.pavan.rapidqa.ui.screens.detail
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pavan.rapidqa.exporter.RapidQaOpenApiExporter
+import com.pavan.rapidqa.exporter.RapidQaPostmanExporter
 import com.pavan.rapidqa.exporter.RapidQaTextExporter
 import com.pavan.rapidqa.store.RapidQADataStore
 import com.pavan.rapidqa.tracer.RapidQATraceRecord
@@ -26,7 +26,7 @@ class TraceDetailViewModel constructor(
 
     val textExporter by lazy { RapidQaTextExporter() }
 
-    val openApiExporter by lazy { RapidQaOpenApiExporter() }
+    val openApiExporter by lazy { RapidQaPostmanExporter() }
 
     private val _uiState = MutableStateFlow<TraceDetailScreenUIState>(TraceDetailScreenUIState())
     val uiState = _uiState.asStateFlow()

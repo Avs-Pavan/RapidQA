@@ -63,7 +63,7 @@ fun ShareOptionsCardUI(
     var fileName by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
-    val selectedType = remember { mutableStateOf(RapidQaExportOption.OPEN_API) }
+    val selectedType = remember { mutableStateOf(RapidQaExportOption.TEXT) }
     val options = RapidQaExportOption.entries.toTypedArray()
 
     AnimatedVisibility(
@@ -176,7 +176,7 @@ fun ShareOptionsCardUI(
                                 }
                             }
 
-                            RapidQaExportOption.OPEN_API -> {
+                            RapidQaExportOption.POSTMAN -> {
                                 {
                                     Icon(
                                         painterResource(id = R.drawable.braces),
@@ -213,8 +213,9 @@ fun ShareOptionsCardUI(
 
 
 enum class RapidQaExportOption(val displayName: String) {
-    OPEN_API("OpenAPI"),
     TEXT("Text"),
+    POSTMAN("Postman"),
+
 //    JSON("Json")
 }
 
