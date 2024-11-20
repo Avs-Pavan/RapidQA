@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -45,7 +46,11 @@ import com.pavan.rapidqa.R
 import com.pavan.rapidqa.ui.theme.Teal40
 
 sealed class RapidQaExportEvent {
-    data class Share(val fileName: String, val rapidQaExportOption: RapidQaExportOption) :
+    data class Share(
+        val fileName: String,
+        val description: String,
+        val rapidQaExportOption: RapidQaExportOption
+    ) :
         RapidQaExportEvent()
 }
 
@@ -56,6 +61,8 @@ fun ShareOptionsCardUI(
     onShareClick: (RapidQaExportEvent) -> Unit = { }
 ) {
     var fileName by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+
     val selectedType = remember { mutableStateOf(RapidQaExportOption.OPEN_API) }
     val options = RapidQaExportOption.entries.toTypedArray()
 
@@ -86,7 +93,7 @@ fun ShareOptionsCardUI(
                     unfocusedContainerColor = Teal40
                 ),
                 label = {
-                    Text("File name", color = Color.White)
+                    Text("Name (Optional)", color = Color.White)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -97,6 +104,36 @@ fun ShareOptionsCardUI(
                     imeAction = ImeAction.Next
                 ),
                 maxLines = 1
+            )
+
+            Spacer(modifier = Modifier.size(4.dp))
+
+            OutlinedTextField(
+                value = description,
+                onValueChange = {
+                    description = it
+                },
+                colors = TextFieldDefaults.colors().copy(
+                    focusedTextColor = Color.White,
+                    focusedIndicatorColor = Color.White,
+                    cursorColor = Color.White,
+                    focusedLabelColor = Color.White,
+                    focusedPrefixColor = Color.White,
+                    focusedContainerColor = Teal40,
+                    unfocusedContainerColor = Teal40
+                ),
+                label = {
+                    Text("Description (Optional)", color = Color.White)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(2.dp),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    capitalization = KeyboardCapitalization.Words,
+                    imeAction = ImeAction.Next
+                ),
             )
 
             Spacer(modifier = Modifier.size(8.dp))
@@ -121,14 +158,14 @@ fun ShareOptionsCardUI(
                             iconColor = Color.White
                         ),
                         leadingIcon = when (option) {
-                            RapidQaExportOption.OPEN_API -> {
-                                {
-                                    Icon(
-                                        painterResource(id = R.drawable.baseline_code_24),
-                                        contentDescription = null,
-                                    )
-                                }
-                            }
+//                            RapidQaExportOption.OPEN_API -> {
+//                                {
+//                                    Icon(
+//                                        painterResource(id = R.drawable.baseline_code_24),
+//                                        contentDescription = null,
+//                                    )
+//                                }
+//                            }
 
                             RapidQaExportOption.TEXT -> {
                                 {
@@ -139,7 +176,7 @@ fun ShareOptionsCardUI(
                                 }
                             }
 
-                            RapidQaExportOption.JSON -> {
+                            RapidQaExportOption.OPEN_API -> {
                                 {
                                     Icon(
                                         painterResource(id = R.drawable.braces),
@@ -158,6 +195,7 @@ fun ShareOptionsCardUI(
                     onShareClick(
                         RapidQaExportEvent.Share(
                             fileName = fileName,
+                            description = description,
                             rapidQaExportOption = selectedType.value
                         )
                     )
@@ -177,7 +215,7 @@ fun ShareOptionsCardUI(
 enum class RapidQaExportOption(val displayName: String) {
     OPEN_API("OpenAPI"),
     TEXT("Text"),
-    JSON("Json")
+//    JSON("Json")
 }
 
 @Composable

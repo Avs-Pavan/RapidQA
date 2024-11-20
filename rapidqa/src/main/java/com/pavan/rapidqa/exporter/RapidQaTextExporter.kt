@@ -16,11 +16,19 @@ import java.io.File
 import java.io.FileOutputStream
 
 class RapidQaTextExporter : RapidQaExporter {
-    override fun export(context: Context, traceRecord: RapidQATraceRecord, fileName: String): File {
-        val file = File(context.filesDir, fileName)
+    override fun export(
+        context: Context,
+        traceRecord: RapidQATraceRecord,
+        fileName: String,
+        description: String
+    ): File {
+        val newFileName = "RapidQA_Trace_${fileName.trim()}_${
+            traceRecord.traceId.asTime().replace(" ", "_")
+        }.txt"
+        val file = File(context.filesDir, newFileName)
         try {
             FileOutputStream(file).use {
-                it.write(traceRecord.toText().toByteArray())
+                it.write(traceRecord.toText(description).toByteArray())
             }
             Log.d("RapidQaTextExporter", "Trace record exported to text file: ${file.absolutePath}")
         } catch (e: Exception) {
@@ -30,7 +38,7 @@ class RapidQaTextExporter : RapidQaExporter {
         return file
     }
 
-    fun RapidQATraceRecord.toText(): String {
+    fun RapidQATraceRecord.toText(description: String): String {
         return """
 /*************************************************
 * Author: Venkata Sai Pavan, Arepalli
@@ -40,6 +48,16 @@ class RapidQaTextExporter : RapidQaExporter {
 
 If you like this project, please give it a star on GitHub and follow me for more updates.
 If you encounter any issues, feel free to open an issue on GitHub.
+
+/****************************************************
+* Description: ${description.takeIf { it.isNotEmpty() } ?: "N/A"}
+****************************************************/
+
+******************** TRACE RECORD *******************
+
+/************************************************
+* Export Date: ${System.currentTimeMillis().asTime()}
+************************************************/
 
 ******************** REQUEST ********************
 

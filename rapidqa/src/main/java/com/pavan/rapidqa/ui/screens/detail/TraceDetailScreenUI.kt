@@ -40,7 +40,6 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pavan.rapidqa.R
 import com.pavan.rapidqa.ui.components.RapidQAResponseCardUI
-import com.pavan.rapidqa.ui.components.asTime
 import com.pavan.rapidqa.ui.theme.Teal40
 import java.io.File
 
@@ -117,20 +116,29 @@ fun TraceDetailScreenUI(
                                         file = viewModel.textExporter.export(
                                             context = context,
                                             traceRecord = trace,
-                                            fileName = "RapidQA_Trace_${event.fileName.trim()}_${
-                                                trace.traceId.asTime().replace(" ", "_")
-                                            }.txt"
+                                            fileName = sanitizeFileName(event.fileName),
+                                            description = event.description
                                         )
                                     )
                                 }
                             }
 
-                            RapidQaExportOption.JSON -> {
-                                //viewModel.jsonExporter.export(uiState.trace!!, "RapidQA_Trace_${uiState.trace?.traceId}.json")
-                            }
+//                            RapidQaExportOption.JSON -> {
+//                                //viewModel.jsonExporter.export(uiState.trace!!, "RapidQA_Trace_${uiState.trace?.traceId}.json")
+//                            }
 
                             RapidQaExportOption.OPEN_API -> {
-                                //viewModel.htmlExporter.export(uiState.trace!!, "RapidQA_Trace_${uiState.trace?.traceId}.html")
+                                uiState.trace?.let { trace ->
+                                    shareTextFile(
+                                        context = context,
+                                        file = viewModel.openApiExporter.export(
+                                            context = context,
+                                            traceRecord = trace,
+                                            fileName = sanitizeFileName(event.fileName)
+                                            , description =     event.description
+                                        )
+                                    )
+                                }
                             }
                         }
                     }
@@ -143,6 +151,12 @@ fun TraceDetailScreenUI(
         }
     }
 }
+
+fun sanitizeFileName(fileName: String): String {
+    // Replace invalid characters with an underscore
+    return fileName.replace(Regex("[^a-zA-Z0-9._-]"), "_")
+}
+
 
 fun shareTextFile(context: Context, file: File) {
     val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)

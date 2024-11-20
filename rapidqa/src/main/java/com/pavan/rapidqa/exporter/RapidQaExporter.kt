@@ -12,5 +12,10 @@ import com.pavan.rapidqa.tracer.RapidQATraceRecord
 import java.io.File
 
 sealed interface RapidQaExporter {
-    fun export(context: Context, traceRecord: RapidQATraceRecord, fileName: String): File
+    fun export(
+        context: Context,
+        traceRecord: RapidQATraceRecord,
+        fileName: String,
+        description: String
+    ): File
 }

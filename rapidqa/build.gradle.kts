@@ -41,6 +41,7 @@ android {
 dependencies {
 
     implementation(libs.retrofit)
+    implementation(libs.gson)
 
 
     // json view

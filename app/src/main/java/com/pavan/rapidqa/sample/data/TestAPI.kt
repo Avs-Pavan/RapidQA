@@ -24,6 +24,7 @@ interface TestAPI {
     @GET("test")
     suspend fun getTest(): Response<TestDTO>
 
+    // Language mocking -
     @Named(tag = "Post API")
     @Mocked(fileName = "test_200", responseCode = 200)
     @Headers(
