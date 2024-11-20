@@ -63,7 +63,7 @@ fun ShareOptionsCardUI(
     var fileName by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
-    val selectedType = remember { mutableStateOf(RapidQaExportOption.POSTMAN) }
+    val selectedType = remember { mutableStateOf(RapidQaExportOption.TEXT) }
     val options = RapidQaExportOption.entries.toTypedArray()
 
     AnimatedVisibility(
@@ -213,8 +213,9 @@ fun ShareOptionsCardUI(
 
 
 enum class RapidQaExportOption(val displayName: String) {
-    POSTMAN("Postman"),
     TEXT("Text"),
+    POSTMAN("Postman"),
+
 //    JSON("Json")
 }
 
