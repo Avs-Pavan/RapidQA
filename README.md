@@ -20,6 +20,9 @@ RapidQA offers three annotations to simplify API call management:
   - **Text**: Human-readable format for quick reviews.
   - **Postman**: Export to JSON format for importing into Postman.
 ---
+### Screen shots:
+<img src="https://github.com/Avs-Pavan/RapidQA/blob/main/5042980512983542505.JPG" style=" height:350px " />    <img src="https://github.com/Avs-Pavan/RapidQA/blob/main/5257672003933655050.JPG" style=" height:350px " />    <img src="https://github.com/Avs-Pavan/RapidQA/blob/main/8878824932387304160.JPG" style=" height:350px " />
+
 
 Feel free to open an issue if you encounter any problems or have suggestions for improvement.
 
